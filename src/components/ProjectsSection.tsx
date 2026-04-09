@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useFocus } from "@/context/FocusContext";
 
 interface Project {
   title: string;
@@ -62,6 +63,8 @@ const projects: Project[] = [
 ];
 
 const EASE = "cubic-bezier(0.23, 1, 0.32, 1)";
+const CARD_H_COMPACT = 78;  // collapsed section: title + tags only
+const CARD_H_FULL = 110;    // expanded section: title + description + tags
 
 /* ── Individual project card (Layer 2) ── */
 function ProjectCard({
@@ -106,7 +109,13 @@ function ProjectCard({
   const showGlow = isHovered || isExpanded;
 
   return (
-    <div style={{ height: 88 }} className="relative">
+    <div
+      style={{
+        height: sectionExpanded ? CARD_H_FULL : CARD_H_COMPACT,
+        transition: `height 400ms ${EASE}`,
+      }}
+      className="relative"
+    >
       <div
         ref={cardRef}
         onClick={(e) => {
@@ -122,9 +131,10 @@ function ProjectCard({
           top: "50%",
           left: "50%",
           width: isExpanded ? "calc(100% + 20px)" : "100%",
+          height: isExpanded ? undefined : sectionExpanded ? CARD_H_FULL : CARD_H_COMPACT,
           overflow: "hidden",
           transform: `translate(-50%, -50%) perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transition: `width 300ms ${EASE}, box-shadow 300ms ${EASE}, border-color 300ms ${EASE}`,
+          transition: `width 300ms ${EASE}, height 300ms ${EASE}, box-shadow 300ms ${EASE}, border-color 300ms ${EASE}`,
           zIndex: isExpanded ? 40 : isHovered ? 20 : 1,
           borderColor: showGlow
             ? `${project.color}40`
@@ -201,8 +211,8 @@ function ProjectCard({
           <p
             className="text-xs text-[var(--color-muted)] overflow-hidden"
             style={{
-              maxHeight: isExpanded ? 0 : 40,
-              opacity: isExpanded ? 0 : 1,
+              maxHeight: isExpanded || !sectionExpanded ? 0 : 40,
+              opacity: isExpanded || !sectionExpanded ? 0 : 1,
               transition: "max-height 250ms ease-out, opacity 200ms ease-out",
             }}
           >
@@ -255,6 +265,7 @@ function ProjectCard({
 
 /* ── Section wrapper (Layer 1) ── */
 export default function ProjectsSection() {
+  const { setFocus } = useFocus();
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -262,6 +273,15 @@ export default function ProjectsSection() {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [allowOverflow, setAllowOverflow] = useState(false);
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
+
+  // Dynamic heights based on project count
+  const previewCount = Math.min(projects.length, 4);
+  const previewRows = Math.ceil(previewCount / 2);
+  const collapsedGrid = previewRows * CARD_H_COMPACT + (previewRows - 1) * 12;
+  const collapsedHeight = 48 + 40 + collapsedGrid;
+  const allRows = Math.ceil(projects.length / 2);
+  const expandedGrid = allRows * CARD_H_FULL + (allRows - 1) * 12;
+  const expandedHeight = 48 + 40 + expandedGrid + 16;
 
   // Delay overflow:visible so height expansion finishes first
   useEffect(() => {
@@ -291,6 +311,7 @@ export default function ProjectsSection() {
       ) {
         setIsExpanded(false);
         setExpandedCard(null);
+        setFocus(null);
       }
     };
 
@@ -302,8 +323,12 @@ export default function ProjectsSection() {
     if (isExpanded) {
       setIsExpanded(false);
       setExpandedCard(null);
+      setFocus(null);
     } else {
       setIsExpanded(true);
+      if (cardRef.current) {
+        setFocus("projects", cardRef.current.getBoundingClientRect());
+      }
     }
   };
 
@@ -326,7 +351,11 @@ export default function ProjectsSection() {
   const showGlow = isHovered || isExpanded;
 
   return (
-    <div style={{ height: 250 }} className="relative perspective-[1200px]" ref={sectionRef}>
+    <div
+      style={{ height: collapsedHeight, zIndex: isExpanded ? 50 : "auto" }}
+      className="relative perspective-[1200px]"
+      ref={sectionRef}
+    >
       <div
         ref={cardRef}
         onMouseEnter={() => setIsHovered(true)}
@@ -338,33 +367,30 @@ export default function ProjectsSection() {
           top: "50%",
           left: "50%",
           width: isExpanded ? "calc(100% + 200px)" : "100%",
+          height: isExpanded ? expandedHeight : collapsedHeight,
+          overflow: allowOverflow ? "visible" : "hidden",
           transform: `translate(-50%, -50%) rotateX(${isExpanded ? 0 : tilt.x}deg) rotateY(${isExpanded ? 0 : tilt.y}deg)`,
-          transition: `all 500ms ${EASE}`,
+          transition: `width 500ms ${EASE}, height 500ms ${EASE}, transform 500ms ${EASE}, z-index 0ms`,
           zIndex: isExpanded ? 30 : isHovered ? 10 : 1,
         }}
       >
         {/* Card surface — border brightens on hover/expand */}
         <div
-          className="rounded-xl bg-[var(--color-card)] border p-6"
+          className="rounded-xl bg-[var(--color-card)] border p-6 h-full"
           style={{
             borderColor: showGlow
               ? "rgba(255,255,255,0.5)"
               : "var(--color-card-border)",
             transition: "border-color 400ms ease-out",
+            overflow: allowOverflow ? "visible" : "hidden",
           }}
         >
           <h2 className="text-base font-bold text-white mb-3">Projects</h2>
 
           {/* Grid wrapper */}
-          <div
-            style={{
-              overflow: allowOverflow ? "visible" : "hidden",
-              maxHeight: isExpanded ? 600 : 186,
-              transition: `max-height 500ms ${EASE}`,
-            }}
-          >
+          <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {projects.map((project) => (
+              {(isExpanded ? projects : projects.slice(0, 4)).map((project) => (
                 <ProjectCard
                   key={project.title}
                   project={project}
