@@ -1,53 +1,32 @@
 import BentoCard from "./BentoCard";
 
-const links = [
-  { label: "GitHub", href: "https://github.com" },
-  { label: "LinkedIn", href: "https://linkedin.com" },
-  { label: "Email", href: "mailto:hello@example.com" },
-];
-
 export default function ContactSection() {
   return (
-    <section id="contact">
-      <h2 className="text-2xl font-bold mb-4">Contact</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <BentoCard className="md:col-span-2">
-          <h3 className="text-lg font-semibold mb-3">Get in Touch</h3>
-          <p className="text-white/70 leading-relaxed mb-6">
-            I&apos;m always open to new opportunities and collaborations.
-            Whether you have a project in mind or just want to say hello,
-            feel free to reach out.
-          </p>
-          <a
-            href="mailto:hello@example.com"
-            className="inline-block px-6 py-2.5 rounded-full bg-white/20 text-sm font-medium text-white border border-white/20 hover:bg-white/30 transition-colors"
-          >
-            Say Hello
-          </a>
-        </BentoCard>
-
-        <BentoCard>
-          <h3 className="text-lg font-semibold mb-3">Links</h3>
-          <div className="space-y-3">
-            {links.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-white/10 transition-colors group"
-              >
-                <span className="text-white/70 group-hover:text-white transition-colors">
-                  {link.label}
-                </span>
-                <span className="text-white/40 group-hover:text-white/70 transition-colors">
-                  &rarr;
-                </span>
-              </a>
-            ))}
-          </div>
-        </BentoCard>
-      </div>
-    </section>
+    <BentoCard>
+      <h2 className="text-lg font-bold text-white mb-3">Get in Touch</h2>
+      <p className="text-sm text-[var(--color-muted)] leading-relaxed mb-4">
+        I&apos;m always open to new opportunities and collaborations. Feel free
+        to reach out.
+      </p>
+      <a
+        href="mailto:hello@example.com"
+        className="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium text-white border border-[var(--color-card-border)] rounded-md hover:bg-white/5 transition-colors"
+      >
+        <svg
+          className="w-3.5 h-3.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+          />
+        </svg>
+        Send Email
+      </a>
+    </BentoCard>
   );
 }
