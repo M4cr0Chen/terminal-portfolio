@@ -3,17 +3,17 @@ import BentoCard from "./BentoCard";
 export default function ContactSection() {
   return (
     <BentoCard>
-      <h2 className="text-lg font-bold text-white mb-3">Get in Touch</h2>
-      <p className="text-sm text-[var(--color-muted)] leading-relaxed mb-4">
+      <h2 className="text-base font-bold text-white mb-2">Get in Touch</h2>
+      <p className="text-sm text-[var(--color-muted)] leading-relaxed mb-3">
         I&apos;m always open to new opportunities and collaborations. Feel free
         to reach out.
       </p>
       <a
         href="mailto:hello@example.com"
-        className="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium text-white border border-[var(--color-card-border)] rounded-md hover:bg-white/5 transition-colors"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white border border-[var(--color-card-border)] rounded-md hover:bg-white/5 transition-colors"
       >
         <svg
-          className="w-3.5 h-3.5"
+          className="w-3 h-3"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

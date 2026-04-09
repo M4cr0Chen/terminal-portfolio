@@ -12,7 +12,7 @@ const categories: SkillCategory[] = [
   },
   {
     label: "Frameworks",
-    skills: ["React", "Next.js", "Django", "Frameworks"],
+    skills: ["React", "Next.js", "Django"],
   },
   {
     label: "Tools",
@@ -27,18 +27,18 @@ const categories: SkillCategory[] = [
 export default function SkillsSection() {
   return (
     <BentoCard>
-      <h2 className="text-lg font-bold text-white mb-4">Skills</h2>
-      <div className="space-y-3">
+      <h2 className="text-base font-bold text-white mb-3">Skills</h2>
+      <div className="space-y-2.5">
         {categories.map((category) => (
-          <div key={category.label} className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-[var(--color-muted)] w-20 shrink-0">
+          <div key={category.label} className="flex items-start gap-3">
+            <span className="text-xs font-medium text-[var(--color-muted)] w-20 shrink-0 pt-0.5">
               {category.label}
             </span>
             <div className="flex flex-wrap gap-1.5">
               {category.skills.map((skill) => (
                 <span
                   key={skill}
-                  className="px-2.5 py-0.5 text-xs rounded bg-[var(--color-background)] border border-[var(--color-card-border)] text-[var(--color-muted)]"
+                  className="px-2 py-0.5 text-xs rounded bg-[var(--color-background)] border border-[var(--color-card-border)] text-[var(--color-muted)]"
                 >
                   {skill}
                 </span>
