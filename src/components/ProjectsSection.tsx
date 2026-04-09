@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, memo } from "react";
 import { useFocus } from "@/context/FocusContext";
 
 interface Project {
@@ -64,10 +64,11 @@ const projects: Project[] = [
 
 const EASE = "cubic-bezier(0.23, 1, 0.32, 1)";
 const CARD_H_COMPACT = 78;  // collapsed section: title + tags only
-const CARD_H_FULL = 110;    // expanded section: title + description + tags
+const CARD_H_FULL = 95;    // expanded section: title + description + tags
+const CARD_BASE_TRANSFORM = "translate(-50%, -50%) perspective(800px) rotateX(0deg) rotateY(0deg)";
 
 /* ── Individual project card (Layer 2) ── */
-function ProjectCard({
+const ProjectCard = memo(function ProjectCard({
   project,
   sectionExpanded,
   isExpanded,
@@ -76,36 +77,41 @@ function ProjectCard({
   project: Project;
   sectionExpanded: boolean;
   isExpanded: boolean;
-  onToggle: () => void;
+  onToggle: (title: string) => void;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const glowRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
 
+  // Direct DOM mutation for tilt + glow — avoids ~60 re-renders/sec on mousemove
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
-    setTilt({ x: (y - 0.5) * -10, y: (x - 0.5) * 10 });
-    setGlowPos({ x: x * 100, y: y * 100 });
-  }, []);
+    cardRef.current.style.transform = `translate(-50%, -50%) perspective(800px) rotateX(${(y - 0.5) * -10}deg) rotateY(${(x - 0.5) * 10}deg)`;
+    if (glowRef.current) {
+      glowRef.current.style.background = `radial-gradient(300px circle at ${x * 100}% ${y * 100}%, ${project.color}, transparent 60%)`;
+    }
+  }, [project.color]);
 
   const handleMouseLeave = useCallback(() => {
     setIsHovered(false);
-    setTilt({ x: 0, y: 0 });
+    if (cardRef.current) {
+      cardRef.current.style.transform = CARD_BASE_TRANSFORM;
+    }
   }, []);
 
-  // Reset hover when section collapses
+  // Sync imperative DOM state when section collapses
   useEffect(() => {
     if (!sectionExpanded) {
       setIsHovered(false);
-      setTilt({ x: 0, y: 0 });
+      if (cardRef.current) {
+        cardRef.current.style.transform = CARD_BASE_TRANSFORM;
+      }
     }
   }, [sectionExpanded]);
 
-  // Whether the card visually pops out (glow on hover OR expanded)
   const showGlow = isHovered || isExpanded;
 
   return (
@@ -121,19 +127,19 @@ function ProjectCard({
         onClick={(e) => {
           if (!sectionExpanded) return;
           e.stopPropagation();
-          onToggle();
+          onToggle(project.title);
         }}
         onMouseEnter={() => sectionExpanded && setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         onMouseMove={(e) => sectionExpanded && handleMouseMove(e)}
-        className={`absolute rounded-lg border bg-[var(--color-background)] will-change-transform ${sectionExpanded ? "cursor-pointer" : "pointer-events-none"}`}
+        className={`absolute rounded-lg border bg-[var(--color-background)] ${sectionExpanded ? "cursor-pointer" : "pointer-events-none"}`}
         style={{
           top: "50%",
           left: "50%",
           width: isExpanded ? "calc(100% + 20px)" : "100%",
           height: isExpanded ? undefined : sectionExpanded ? CARD_H_FULL : CARD_H_COMPACT,
           overflow: "hidden",
-          transform: `translate(-50%, -50%) perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transform: CARD_BASE_TRANSFORM,
           transition: `width 300ms ${EASE}, height 300ms ${EASE}, box-shadow 300ms ${EASE}, border-color 300ms ${EASE}`,
           zIndex: isExpanded ? 40 : isHovered ? 20 : 1,
           borderColor: showGlow
@@ -146,13 +152,14 @@ function ProjectCard({
               : "none",
         }}
       >
-        {/* Cursor-following glow */}
+        {/* Cursor-following glow — background updated via ref */}
         <div
+          ref={glowRef}
           className="pointer-events-none absolute inset-0"
           style={{
             opacity: showGlow ? 0.1 : 0,
             transition: "opacity 300ms ease-out",
-            background: `radial-gradient(300px circle at ${glowPos.x}% ${glowPos.y}%, ${project.color}, transparent 60%)`,
+            background: `radial-gradient(300px circle at 50% 50%, ${project.color}, transparent 60%)`,
           }}
         />
 
@@ -261,7 +268,7 @@ function ProjectCard({
       </div>
     </div>
   );
-}
+});
 
 /* ── Section wrapper (Layer 1) ── */
 export default function ProjectsSection() {
@@ -270,7 +277,6 @@ export default function ProjectsSection() {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [allowOverflow, setAllowOverflow] = useState(false);
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
 
@@ -293,13 +299,6 @@ export default function ProjectsSection() {
     }
   }, [isExpanded]);
 
-  // Collapse everything when section loses hover
-  useEffect(() => {
-    if (!isHovered && !isExpanded) {
-      setExpandedCard(null);
-    }
-  }, [isHovered, isExpanded]);
-
   // Click outside to collapse
   useEffect(() => {
     if (!isExpanded) return;
@@ -317,7 +316,7 @@ export default function ProjectsSection() {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isExpanded]);
+  }, [isExpanded, setFocus]);
 
   const handleSectionClick = () => {
     if (isExpanded) {
@@ -332,20 +331,30 @@ export default function ProjectsSection() {
     }
   };
 
+  // Direct DOM mutation for tilt — avoids re-renders on every mousemove
   const handleSectionMouseMove = useCallback(
     (e: React.MouseEvent) => {
       if (isExpanded || !cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = (e.clientY - rect.top) / rect.height;
-      setTilt({ x: (y - 0.5) * -6, y: (x - 0.5) * 6 });
+      cardRef.current.style.transform = `translate(-50%, -50%) rotateX(${(y - 0.5) * -6}deg) rotateY(${(x - 0.5) * 6}deg)`;
     },
     [isExpanded]
   );
 
+  // Reset tilt via DOM + collapse expandedCard inline (no effect needed)
   const handleSectionMouseLeave = useCallback(() => {
     setIsHovered(false);
-    setTilt({ x: 0, y: 0 });
+    if (cardRef.current) {
+      cardRef.current.style.transform = "translate(-50%, -50%) rotateX(0deg) rotateY(0deg)";
+    }
+    setExpandedCard((prev) => (isExpanded ? prev : null));
+  }, [isExpanded]);
+
+  // Stable callback for card toggle — enables memo on ProjectCard
+  const handleCardToggle = useCallback((title: string) => {
+    setExpandedCard((prev) => (prev === title ? null : title));
   }, []);
 
   const showGlow = isHovered || isExpanded;
@@ -362,14 +371,14 @@ export default function ProjectsSection() {
         onMouseLeave={handleSectionMouseLeave}
         onMouseMove={handleSectionMouseMove}
         onClick={handleSectionClick}
-        className="absolute cursor-pointer will-change-transform"
+        className="absolute cursor-pointer"
         style={{
           top: "50%",
           left: "50%",
           width: isExpanded ? "calc(100% + 200px)" : "100%",
           height: isExpanded ? expandedHeight : collapsedHeight,
           overflow: allowOverflow ? "visible" : "hidden",
-          transform: `translate(-50%, -50%) rotateX(${isExpanded ? 0 : tilt.x}deg) rotateY(${isExpanded ? 0 : tilt.y}deg)`,
+          transform: "translate(-50%, -50%) rotateX(0deg) rotateY(0deg)",
           transition: `width 500ms ${EASE}, height 500ms ${EASE}, transform 500ms ${EASE}, z-index 0ms`,
           zIndex: isExpanded ? 30 : isHovered ? 10 : 1,
         }}
@@ -396,11 +405,7 @@ export default function ProjectsSection() {
                   project={project}
                   sectionExpanded={isExpanded}
                   isExpanded={expandedCard === project.title}
-                  onToggle={() =>
-                    setExpandedCard(
-                      expandedCard === project.title ? null : project.title
-                    )
-                  }
+                  onToggle={handleCardToggle}
                 />
               ))}
             </div>
