@@ -1,74 +1,87 @@
-import BentoCard from "./BentoCard";
+import Image from "next/image";
 
 interface Experience {
   role: string;
   company: string;
+  icon?: string;
   period: string;
-  current?: boolean;
-  bullets: string[];
+  description: string;
 }
 
 const experiences: Experience[] = [
   {
-    role: "Research Assistant",
-    company: "Tencent Games",
-    period: "Jan 2026 - Current",
-    current: true,
-    bullets: [
-      "Passionate about machine learning distributed development or compilation, and sconerset methods.",
-      "Research assistant, machine learning, distributed prolesss and development.",
-    ],
+    role: "Software Engineer Intern",
+    company: "Geotab",
+    icon: "/company_icons/geotab.jpeg",
+    period: "May 2026 - Aug 2026",
+    description:
+      "Built distributed systems and development tooling for fleet management platform.",
   },
   {
-    role: "AI Training Dataset Reviewer",
+    role: "Research Assistant",
+    company: "Tencent Games",
+    icon: "/company_icons/tencent.png",
+    period: "Jan 2026 - May 2026",
+    description:
+      "Machine learning research on distributed training and compilation optimization methods.",
+  },
+  {
+    role: "Agentic AI Trainer",
     company: "Shipd",
-    period: "Dec 2025 - Current",
-    current: true,
-    bullets: [
-      "AI training dataset machine learning at Shipd with systems, and web web development.",
-      "Masunmiowest dataset learning common parasoisiiens.",
-    ],
+    icon: "/company_icons/shipd.png",
+    period: "Dec 2025 - April 2026",
+    description:
+      "Reviewing and curating AI training datasets for machine learning systems.",
   },
   {
     role: "Software Engineer Intern",
     company: "Geotab",
+    icon: "/company_icons/geotab.jpeg",
     period: "Sep 2025 - Dec 2025",
-    bullets: [
-      "Software engineer intern at Geotab, arrvound systems, and development loans.",
-      "Confient learning from renaerien moets and llo-itl systems.",
-    ],
+    description:
+      "Built distributed systems and development tooling for fleet management platform.",
+  },
+  {
+    role: "Software Engineer Intern",
+    company: "Octopodi Technologies",
+    icon: "/company_icons/octopodi.png",
+    period: "Jan 2025 - April 2025",
+    description:
+      "Built distributed systems and development tooling for fleet management platform.",
   },
 ];
 
 export default function ExperienceSection() {
   return (
-    <BentoCard>
-      <h2 className="text-base font-bold text-white mb-3">Experience</h2>
-      <div className="space-y-4">
-        {experiences.map((exp) => (
-          <div key={`${exp.role}-${exp.company}`}>
-            <h3 className="text-sm font-semibold text-white">
-              {exp.role}
-              <span className="font-normal text-[var(--color-muted)]">
-                {" "}at {exp.company}
+    <section id="experience">
+      <h2 className="text-lg font-semibold text-white mb-6">experience</h2>
+      <div className="space-y-5">
+        {experiences.map((exp, i) => (
+          <div key={`${exp.role}-${exp.company}-${i}`}>
+            <div className="flex items-baseline justify-between gap-4">
+              <span className="text-sm text-white">
+                {exp.role}{" "}
+                {exp.icon && (
+                  <Image
+                    src={exp.icon}
+                    alt={exp.company}
+                    width={16}
+                    height={16}
+                    className="inline-block align-text-bottom rounded-sm mx-0.5"
+                  />
+                )}
+                <span className="underline decoration-[#767676] hover:decoration-[#c0c0c0] transition-colors underline-offset-2">{exp.company}</span>
               </span>
-              <span className="text-xs font-normal text-[var(--color-muted)]">
-                {" "}({exp.period})
+              <span className="text-xs text-[var(--color-muted)] whitespace-nowrap">
+                {exp.period}
               </span>
-            </h3>
-            <ul className="mt-1.5 space-y-1 ml-4">
-              {exp.bullets.map((bullet, i) => (
-                <li
-                  key={i}
-                  className="text-sm text-[var(--color-muted)] leading-relaxed list-disc"
-                >
-                  {bullet}
-                </li>
-              ))}
-            </ul>
+            </div>
+            <p className="text-sm text-[var(--color-muted)] mt-1 leading-relaxed">
+              &mdash; {exp.description}
+            </p>
           </div>
         ))}
       </div>
-    </BentoCard>
+    </section>
   );
 }

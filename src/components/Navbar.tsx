@@ -1,38 +1,22 @@
-"use client";
-
-import { useState } from "react";
-
 const navItems = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { label: "home", href: "#top" },
+  { label: "experience", href: "#experience" },
+  { label: "projects", href: "#projects" },
+  { label: "contact", href: "#contact" },
 ];
 
 export default function Navbar() {
-  const [active, setActive] = useState("Home");
-
-  const handleClick = (label: string, href: string) => {
-    setActive(label);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-1 px-2 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-lg">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-background)]/80 backdrop-blur-sm">
+      <div className="max-w-[640px] mx-auto px-6 py-4 flex items-center gap-6 ml-[calc(50%-340px+3vw)]">
         {navItems.map((item) => (
-          <button
+          <a
             key={item.label}
-            onClick={() => handleClick(item.label, item.href)}
-            className={`px-5 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer whitespace-nowrap ${
-              active === item.label
-                ? "bg-white/10 text-white"
-                : "text-[var(--color-muted)] hover:text-white hover:bg-white/5"
-            }`}
+            href={item.href}
+            className="text-sm text-[var(--color-muted)] hover:text-white transition-colors"
           >
             {item.label}
-          </button>
+          </a>
         ))}
       </div>
     </nav>

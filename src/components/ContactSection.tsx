@@ -1,32 +1,28 @@
-import BentoCard from "./BentoCard";
+const links = [
+  { label: "email", href: "mailto:hello@example.com" },
+  { label: "twitter", href: "https://twitter.com" },
+  { label: "github", href: "https://github.com" },
+  { label: "linkedin", href: "https://linkedin.com" },
+];
 
 export default function ContactSection() {
+  const isExternal = (href: string) => !href.startsWith("mailto");
+
   return (
-    <BentoCard>
-      <h2 className="text-base font-bold text-white mb-2">Get in Touch</h2>
-      <p className="text-sm text-[var(--color-muted)] leading-relaxed mb-3">
-        I&apos;m always open to new opportunities and collaborations. Feel free
-        to reach out.
-      </p>
-      <a
-        href="mailto:hello@example.com"
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white border border-[var(--color-card-border)] rounded-md hover:bg-white/5 transition-colors"
-      >
-        <svg
-          className="w-3 h-3"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-          />
-        </svg>
-        Send Email
-      </a>
-    </BentoCard>
+    <footer id="contact" className="pt-8 pb-4 space-y-6">
+      <div className="flex items-center gap-6 flex-wrap">
+        {links.map((link) => (
+          <a
+            key={link.label}
+            href={link.href}
+            target={isExternal(link.href) ? "_blank" : undefined}
+            rel={isExternal(link.href) ? "noopener noreferrer" : undefined}
+            className="text-sm text-[var(--color-muted)] hover:text-white transition-colors"
+          >
+            [ {link.label} ]
+          </a>
+        ))}
+      </div>
+    </footer>
   );
 }
