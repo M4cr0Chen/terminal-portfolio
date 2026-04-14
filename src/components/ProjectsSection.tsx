@@ -6,40 +6,46 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "LangGraph - AI/ML Framework",
+    title: "LLM Gateway",
     description:
-      "A framework for building stateful, multi-actor applications with LLMs featuring graph-based orchestration and built-in persistence.",
-    tags: ["Python", "AI/ML", "LangChain", "Graphs"],
+      "High-performance API gateway for large language models with dynamic batching, request prioritization, and real-time monitoring.",
+    tags: ["Go", "gRPC", "Kubernetes", "Prometheus"],
+  },
+  // {
+  //   title: "Distributed KV Store",
+  //   description:
+  //     "Raft-based distributed key-value store supporting linearizable reads, automatic leader election, and log compaction.",
+  //   tags: ["Go", "Raft", "gRPC", "Distributed Systems"],
+  // },
+  // {
+  //   title: "Real-time Chat Platform",
+  //   description:
+  //     "End-to-end encrypted messaging platform supporting 10k concurrent connections per node with horizontal scaling.",
+  //   tags: ["TypeScript", "WebSocket", "Redis", "React"],
+  // },
+  {
+    title: "High Concurrency Cache System",
+    description:
+      "In-memory cache system optimized for high concurrency workloads with sharding and lock-free data structures.",
+    tags: ["C++", "Concurrency", "LRU/LFU/ARC"],
   },
   {
-    title: "PyTorch - Deep Learning Library",
+    title: "SnapNote",
     description:
-      "Contributed to autograd engine and CUDA kernel optimizations. Improved training throughput by 15% for transformer architectures.",
-    tags: ["Python", "C++", "CUDA", "Deep Learning"],
+      "AI-powered note-taking platform that turns handwritten notes into organized digital documents with RAG semantic search and agentic workflows.",
+    tags: ["Python", "TypeScript", "OCR", "RAG", "LangGraph", "PostgreSQL/pgvector", "React"],
   },
   {
-    title: "TensorFlow - ML Platform",
+    title: "WLP4 Compiler",
     description:
-      "Built custom operators for distributed training across multi-GPU clusters with efficient data pipeline strategies.",
-    tags: ["Python", "AI/ML", "C++", "Distributed"],
+      "A compiler for the WLP4 language (Simplified C) that generates MIPS assembly code, implemented scanner, parser, semantic analyzer, and code generator from scratch using C++.",
+    tags: ["C++", "Compiler", "MIPS"],
   },
   {
-    title: "Distributed KV Store",
+    title: "Biquadris",
     description:
-      "Raft-based distributed key-value store supporting linearizable reads, automatic leader election, and log compaction.",
-    tags: ["Go", "Raft", "gRPC", "Distributed Systems"],
-  },
-  {
-    title: "Real-time Chat Platform",
-    description:
-      "End-to-end encrypted messaging platform supporting 10k concurrent connections per node with horizontal scaling.",
-    tags: ["TypeScript", "WebSocket", "Redis", "React"],
-  },
-  {
-    title: "ML Pipeline Orchestrator",
-    description:
-      "Declarative ML pipeline framework with automatic hyperparameter tuning, experiment tracking, and model versioning.",
-    tags: ["Python", "Kubernetes", "MLflow", "Docker"],
+      "A multiplayer Tetris video game implemented in C++. Supports both CLI and GUI, optimized resources management with RAII, implements software design patterns.",
+    tags: ["C++", "RAII"],
   },
 ];
 
