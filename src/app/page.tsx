@@ -7,8 +7,8 @@ import ContactSection from "@/components/ContactSection";
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <main className="max-w-[640px] mx-auto px-6 pt-28 pb-16 space-y-16 ml-[calc(50%-340px+3vw)]">
+      {/* <Navbar /> */}
+      <main className="max-w-[640px] mx-auto px-6 pt-16 pb-16 space-y-16 ml-[calc(50%-340px+3vw)]">
         <HeroSection />
         <ExperienceSection />
         <ProjectsSection />
