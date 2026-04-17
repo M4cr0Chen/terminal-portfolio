@@ -9,7 +9,13 @@ const projects: Project[] = [
     title: "LLM Gateway",
     description:
       "High-performance API gateway for large language models with dynamic batching, request prioritization, and real-time monitoring.",
-    tags: ["Go", "gRPC", "Kubernetes", "Prometheus"],
+    tags: ["Go", "gRPC", "Redis", "Kafka", "PostgreSQL/pgvector", "ClickHouse", "Docker/Kubernetes", "Prometheus/Grafana"],
+  },
+  {
+    title: "NanoVLLM",
+    description:
+      "A minimalistic implementation of a transformer-based LLM inference engine optimized for low-latency and high-throughput on GPU with continuous batching, multi-step scheduling.",
+    tags: ["Python", "CUDA", "Multi-Head Attention", "KV Cache", "Tensor Parallelism", "Prefix Cache"],
   },
   // {
   //   title: "Distributed KV Store",

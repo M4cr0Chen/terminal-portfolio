@@ -1,5 +1,5 @@
 const items = [
-  "building a ray tracer from scratch in C++",
+  "learning llm inference engines (building a nano vllm from scratch)",
   "exploring CUDA kernels and GPU programming",
   "reading Designing Data-Intensive Applications",
 ];
