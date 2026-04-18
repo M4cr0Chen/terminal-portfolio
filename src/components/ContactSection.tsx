@@ -3,6 +3,7 @@ const links = [
   { label: "twitter", href: "https://x.com/zh_mc050503" },
   { label: "github", href: "https://github.com/M4cr0Chen" },
   { label: "linkedin", href: "https://www.linkedin.com/in/zhenghong-chen-974102245/" },
+  { label: "resume", href: "/Marco_Resume.pdf" },
 ];
 
 export default function ContactSection() {
