@@ -64,7 +64,7 @@ export default function ExperienceSection() {
       <div className="space-y-5">
         {experiences.map((exp, i) => (
           <div key={`${exp.role}-${exp.company}-${i}`}>
-            <div className="flex items-baseline justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
               <span className="text-sm text-white">
                 {exp.role}{" "}
                 {exp.icon && (
