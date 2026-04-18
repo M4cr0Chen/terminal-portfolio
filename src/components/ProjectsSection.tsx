@@ -12,9 +12,9 @@ const projects: Project[] = [
     tags: ["Go", "gRPC", "Redis", "Kafka", "PostgreSQL/pgvector", "ClickHouse", "Docker/Kubernetes", "Prometheus/Grafana"],
   },
   {
-    title: "NanoVLLM",
+    title: "Nano-vLLM",
     description:
-      "A minimalistic implementation of a transformer-based LLM inference engine optimized for low-latency and high-throughput on GPU with continuous batching, multi-step scheduling.",
+      "A minimalistic implementation of a transformer-based LLM inference engine optimized for low-latency and high-throughput on GPU with smart memory management.",
     tags: ["Python", "CUDA", "Multi-Head Attention", "KV Cache", "Tensor Parallelism", "Prefix Cache"],
   },
   // {

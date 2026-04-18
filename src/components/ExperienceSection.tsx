@@ -6,6 +6,7 @@ interface Experience {
   icon?: string;
   period: string;
   description: string;
+  link: string;
 }
 
 const experiences: Experience[] = [
@@ -16,14 +17,16 @@ const experiences: Experience[] = [
     period: "May 2026 - Aug 2026",
     description:
       "Built distributed systems and development tooling for fleet management platform.",
+    link: "https://www.geotab.com/",
   },
   {
-    role: "Research Assistant",
+    role: "Game Engine Development Apprentice (AIGC)",
     company: "Tencent Games",
     icon: "/company_icons/tencent.png",
     period: "Jan 2026 - May 2026",
     description:
-      "Machine learning research on distributed training and compilation optimization methods.",
+      "Designed a RAG persistent memory system and a hiearchical memory retrieval strategy.",
+    link: "https://www.linkedin.com/company/tencent-games/",
   },
   {
     role: "Agentic AI Trainer",
@@ -31,7 +34,8 @@ const experiences: Experience[] = [
     icon: "/company_icons/shipd.png",
     period: "Dec 2025 - April 2026",
     description:
-      "Reviewing and curating AI training datasets for machine learning systems.",
+      "Reviewed and curated AI training datasets for LLM Coding Agents.",
+    link: "https://datacurve.ai/",
   },
   {
     role: "Software Engineer Intern",
@@ -39,7 +43,8 @@ const experiences: Experience[] = [
     icon: "/company_icons/geotab.jpeg",
     period: "Sep 2025 - Dec 2025",
     description:
-      "Built distributed systems and development tooling for fleet management platform.",
+      "Built end-to-end compliance tests in C#, maintained and optimized the Geotab Drive App.",
+    link: "https://www.geotab.com/",
   },
   {
     role: "Software Engineer Intern",
@@ -47,7 +52,8 @@ const experiences: Experience[] = [
     icon: "/company_icons/octopodi.png",
     period: "Jan 2025 - April 2025",
     description:
-      "Built distributed systems and development tooling for fleet management platform.",
+      "Built the frontend of a cross-platform desktop application in Next.js, React, and Tauri.",
+    link: "https://www.octopodi.com/",
   },
 ];
 
@@ -70,7 +76,9 @@ export default function ExperienceSection() {
                     className="inline-block align-text-bottom rounded-sm mx-0.5"
                   />
                 )}
-                <span className="underline decoration-[#767676] hover:decoration-[#c0c0c0] transition-colors underline-offset-2">{exp.company}</span>
+                <a href={exp.link} target="_blank" rel="noopener noreferrer" className="underline decoration-[#767676] hover:decoration-[#c0c0c0] transition-colors underline-offset-2">
+                  {exp.company}
+                </a>
               </span>
               <span className="text-xs text-[var(--color-muted)] whitespace-nowrap">
                 {exp.period}

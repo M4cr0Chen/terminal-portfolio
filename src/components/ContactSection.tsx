@@ -1,8 +1,8 @@
 const links = [
-  { label: "email", href: "mailto:hello@example.com" },
-  { label: "twitter", href: "https://twitter.com" },
-  { label: "github", href: "https://github.com" },
-  { label: "linkedin", href: "https://linkedin.com" },
+  { label: "email", href: "mailto:z253chen@uwaterloo.ca" },
+  { label: "twitter", href: "https://x.com/zh_mc050503" },
+  { label: "github", href: "https://github.com/M4cr0Chen" },
+  { label: "linkedin", href: "https://www.linkedin.com/in/zhenghong-chen-974102245/" },
 ];
 
 export default function ContactSection() {
