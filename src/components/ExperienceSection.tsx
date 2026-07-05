@@ -15,7 +15,7 @@ const experiences: Experience[] = [{
     icon: "/company_icons/watai.jpeg",
     period: "June 2026 - Present",
     description:
-      "Researching on World Model for soccer dynamics, building a Mamba + S4 + actor/crtic architecture to predict next latent state and planning strategic actions.",
+      "Researching on World Model for soccer dynamics, building a Selective SSM + Imagined Rollout + Actor-Critic architecture to predict next latent state and planning strategic actions.",
     link: "https://watai.ca/",
   },
   {
