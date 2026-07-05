@@ -6,16 +6,22 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "LLM Gateway",
+    title: "LLM From Scratch",
     description:
-      "High-performance API gateway for large language models with dynamic batching, request prioritization, and real-time monitoring.",
-    tags: ["Go", "gRPC", "Redis", "Kafka", "PostgreSQL/pgvector", "ClickHouse", "Docker/Kubernetes", "Prometheus/Grafana"],
+      "Implemented all components of a language model from scratch (tokenizer, model, optimizer), trained a minimal Language Model on TinyStory dataset.",
+    tags: ["Python", "PyTorch", "Transformers", "CUDA", "WandB", "Multiprocecssing"],
   },
   {
     title: "Nano-vLLM",
     description:
       "A minimalistic implementation of a transformer-based LLM inference engine optimized for low-latency and high-throughput on GPU with smart memory management.",
     tags: ["Python", "CUDA", "Multi-Head Attention", "KV Cache", "Tensor Parallelism", "Prefix Cache"],
+  },
+  {
+    title: "LLM Gateway",
+    description:
+      "High-performance API gateway for large language models with smart routing, semantic caching, rate-limiting, and real-time monitoring.",
+    tags: ["Go", "gRPC", "Redis", "Kafka", "PostgreSQL/pgvector", "ClickHouse", "Docker/Kubernetes", "Prometheus/Grafana"],
   },
   // {
   //   title: "Distributed KV Store",
@@ -33,7 +39,7 @@ const projects: Project[] = [
     title: "High Concurrency Cache System",
     description:
       "In-memory cache system optimized for high concurrency workloads with sharding and lock-free data structures.",
-    tags: ["C++", "Concurrency", "LRU/LFU/ARC"],
+    tags: ["C++", "LRU/LFU/ARC"],
   },
   {
     title: "SnapNote",
@@ -68,7 +74,7 @@ export default function ProjectsSection() {
             <p className="text-sm text-[var(--color-muted)] mt-1 leading-relaxed">
               {project.description}
             </p>
-            <p className="text-xs text-[var(--color-muted)]/60 mt-1">
+            <p className="text-xs text-[var(--color-muted)] mt-1">
               {project.tags.join(", ")}
             </p>
           </div>

@@ -9,14 +9,22 @@ interface Experience {
   link: string;
 }
 
-const experiences: Experience[] = [
+const experiences: Experience[] = [{
+    role: "Machine Learning Engineer",
+    company: "WAT.ai",
+    icon: "/company_icons/watai.jpeg",
+    period: "June 2026 - Present",
+    description:
+      "Researching on World Model for soccer dynamics, building a Mamba + S4 + actor/crtic architecture to predict next latent state and planning strategic actions.",
+    link: "https://watai.ca/",
+  },
   {
     role: "Software Engineer Intern",
     company: "Geotab",
     icon: "/company_icons/geotab.jpeg",
     period: "May 2026 - Aug 2026",
     description:
-      "Built distributed systems and development tooling for fleet management platform.",
+      "Optimized harsh event recommendation latency, engineered an offline-first cache layer with a synchronization queue, built an error observability dashboard.",
     link: "https://www.geotab.com/",
   },
   {
@@ -52,7 +60,7 @@ const experiences: Experience[] = [
     icon: "/company_icons/octopodi.png",
     period: "Jan 2025 - April 2025",
     description:
-      "Built the frontend of a cross-platform desktop application in Next.js, React, and Tauri.",
+      "Developed a coding plagiarism detection application in Rust and TypeScript.",
     link: "https://www.octopodi.com/",
   },
 ];

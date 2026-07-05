@@ -1,7 +1,7 @@
 const items = [
-  "learning llm inference engines (building a nano vllm from scratch)",
+  "researching on World Model, exploring Model-Based Reinforcement Learning",
   "exploring CUDA kernels and GPU programming",
-  "reading Designing Data-Intensive Applications",
+  "building a nano vllm for macOS hardware (MPS)",
 ];
 
 export default function NowSection() {
@@ -18,8 +18,8 @@ export default function NowSection() {
           </li>
         ))}
       </ul>
-      <p className="text-xs text-[var(--color-muted)] mt-4 opacity-50">
-        updated apr 2026
+      <p className="text-xs text-[var(--color-muted)] mt-4 opacity-80">
+        updated July 2026
       </p>
     </section>
   );
