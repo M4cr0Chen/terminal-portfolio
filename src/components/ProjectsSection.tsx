@@ -12,10 +12,10 @@ const projects: Project[] = [
     tags: ["Python", "PyTorch", "Transformers", "CUDA", "WandB", "Multiprocecssing"],
   },
   {
-    title: "Nano-vLLM",
+    title: "Mini-vLLM",
     description:
       "A minimalistic implementation of a transformer-based LLM inference engine optimized for low-latency and high-throughput on GPU with smart memory management.",
-    tags: ["Python", "CUDA", "Multi-Head Attention", "KV Cache", "Tensor Parallelism", "Prefix Cache"],
+    tags: ["Python", "MLX", "PagedAttention", "Prefix Cache", "Continuous Batching", "Chunked Prefill", "Tensor Parallelism"],
   },
   {
     title: "LLM Gateway",
