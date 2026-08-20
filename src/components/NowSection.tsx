@@ -1,7 +1,7 @@
 const items = [
-  "researching on World Model, exploring Model-Based Reinforcement Learning",
+  "researching on World Model, Model-Based Reinforcement Learning",
   "exploring CUDA kernels and GPU programming",
-  "building a nano vllm for macOS hardware (MPS)",
+  "leetcoding",
 ];
 
 export default function NowSection() {
